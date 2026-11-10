@@ -18,6 +18,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, "..");
 const bundlePath = path.join(root, "lib", "client.js");
+const pkg = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"));
 
 let passed = 0;
 function check(name, fn) {
@@ -119,7 +120,7 @@ new Function("window", source)(fakeWindow);
 
 assert.equal(registrations.length, 1, "bundle must register exactly one factory");
 const registration = registrations[0];
-assert.equal(registration.id, "dsh-browser");
+assert.equal(registration.id, pkg.name, "bundle id must equal the package name");
 assert.equal(typeof registration.factory, "function");
 
 const requiredModules = [];
@@ -132,7 +133,7 @@ const fakeRequire = (id) => {
 const plugin = registration.factory(fakeRequire);
 
 console.log("bundle envelope");
-await check("id is dsh-browser and the factory returns apply/inject", () => {
+await check("id equals the package name and the factory returns apply/inject", () => {
   assert.equal(typeof plugin.apply, "function");
   assert.ok(Array.isArray(plugin.inject));
   assert.deepEqual(plugin.inject, ["slots", "locale", "layout"]);
