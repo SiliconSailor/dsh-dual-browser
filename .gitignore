@@ -3,3 +3,4 @@ node_modules/
 .dsh-browser-profile/
 _preview/
 *.log
+*.tgz
