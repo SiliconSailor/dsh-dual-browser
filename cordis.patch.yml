@@ -1,0 +1,28 @@
+# dsh-dual-browser bundle patch: mounts the agent browser plugin.
+#
+# Install (the supported live path): the in-app plugin service —
+#   plugin_manager { action: "install_bundle", target: "<abs path to the package>" }
+# which pnpm-installs the local package (`link:` dependency), appends
+# "dsh-dual-browser" to `dsh.profile.bundles` and ENABLES the bundle
+# automatically: there is no separate `enable` step and this file must not be
+# edited by hand.
+#
+# The row registers the eight `browser_*` tools in the shared tool registry,
+# one system-prompt usage section, five Web routes for the panel, and the
+# client bundle declared in package.json `dsh.client`.
+#
+# Keys not listed below keep their defaults from lib/index.js `Config`;
+# an optional key may be added here (for example outputDir, maxActivity,
+# maxSessions, executablePath) without touching the code.
+- insert:
+    - id: dsh-dual-browser
+      # Node-resolvable package name — must stay in sync with package.json
+      # `name`; the bundle row mounts the package's exported `apply(ctx, config)`.
+      name: 'dsh-dual-browser'
+      config:
+        # auto = the agent picks visibility per action; visible = every launch
+        # is on screen and hidden launches are disabled.
+        mode: auto
+        searchEngine: duckduckgo
+        hiddenIdleMs: 45000
+        promptSectionOrder: 118
