@@ -1,6 +1,6 @@
 {
   "name": "dsh-dual-browser",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Agent browser for DeepSeek Harness with two visibility modes: hidden sessions for private research and visible sessions you can watch, plus a left-sidebar panel.",
   "type": "module",
   "main": "lib/index.js",
@@ -22,7 +22,7 @@
   "engines": {
     "node": ">=20"
   },
-  "license": "Unlicense",
+  "license": "MIT",
   "author": {
     "name": "SiliconSailor",
     "url": "https://github.com/SiliconSailor"
